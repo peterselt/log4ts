@@ -1,11 +1,12 @@
 "use strict";
+exports.__esModule = true;
 var LogLevel_1 = require("../LogLevel");
+var HTMLLayoutColorTheme;
 (function (HTMLLayoutColorTheme) {
     HTMLLayoutColorTheme[HTMLLayoutColorTheme["LIGHT"] = 0] = "LIGHT";
     HTMLLayoutColorTheme[HTMLLayoutColorTheme["DARK"] = 1] = "DARK";
     HTMLLayoutColorTheme[HTMLLayoutColorTheme["SOLARIZED"] = 2] = "SOLARIZED";
-})(exports.HTMLLayoutColorTheme || (exports.HTMLLayoutColorTheme = {}));
-var HTMLLayoutColorTheme = exports.HTMLLayoutColorTheme;
+})(HTMLLayoutColorTheme = exports.HTMLLayoutColorTheme || (exports.HTMLLayoutColorTheme = {}));
 var HTMLLayout = (function () {
     function HTMLLayout(colors_theme) {
         if (colors_theme === HTMLLayoutColorTheme.LIGHT) {
@@ -85,5 +86,4 @@ var HTMLLayout = (function () {
     };
     return HTMLLayout;
 }());
-exports.__esModule = true;
 exports["default"] = HTMLLayout;

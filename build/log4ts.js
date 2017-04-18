@@ -1,5 +1,6 @@
 "use strict";
+exports.__esModule = true;
 var Logger_1 = require("./Logger");
-exports.Logger = Logger_1.default;
+exports.Logger = Logger_1["default"];
 var LoggerConfig_1 = require("./LoggerConfig");
-exports.LoggerConfig = LoggerConfig_1.default;
+exports.LoggerConfig = LoggerConfig_1["default"];

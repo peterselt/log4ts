@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var BaseAppender = (function () {
     function BaseAppender() {
     }
@@ -12,5 +13,4 @@ var BaseAppender = (function () {
     };
     return BaseAppender;
 }());
-exports.__esModule = true;
 exports["default"] = BaseAppender;

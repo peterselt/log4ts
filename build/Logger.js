@@ -1,31 +1,59 @@
 "use strict";
+exports.__esModule = true;
 var LoggerConfig_1 = require("./LoggerConfig");
 var LogLevel_1 = require("./LogLevel");
-var Utils_1 = require("./Utils");
 var Logger = (function () {
     function Logger(tag) {
         this.tag = tag;
     }
-    Logger.prototype.log = function (message, object, deep) {
-        this.doLog(LogLevel_1.LogLevel.INFO, message, object, deep);
+    Logger.prototype.log = function (message) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        this.doLog(LogLevel_1.LogLevel.INFO, message, params);
     };
-    Logger.prototype.info = function (message, object, deep) {
-        this.doLog(LogLevel_1.LogLevel.INFO, message, object, deep);
+    Logger.prototype.info = function (message) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        this.doLog(LogLevel_1.LogLevel.INFO, message, params);
     };
-    Logger.prototype.fatal = function (message, object, deep) {
-        this.doLog(LogLevel_1.LogLevel.FATAL, message, object, deep);
+    Logger.prototype.fatal = function (message) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        this.doLog(LogLevel_1.LogLevel.FATAL, message, params);
     };
-    Logger.prototype.error = function (message, object, deep) {
-        this.doLog(LogLevel_1.LogLevel.ERROR, message, object, deep);
+    Logger.prototype.error = function (message) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        this.doLog(LogLevel_1.LogLevel.ERROR, message, params);
     };
-    Logger.prototype.debug = function (message, object, deep) {
-        this.doLog(LogLevel_1.LogLevel.DEBUG, message, object, deep);
+    Logger.prototype.debug = function (message) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        this.doLog(LogLevel_1.LogLevel.DEBUG, message, params);
     };
-    Logger.prototype.warn = function (message, object, deep) {
-        this.doLog(LogLevel_1.LogLevel.WARN, message, object, deep);
+    Logger.prototype.warn = function (message) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        this.doLog(LogLevel_1.LogLevel.WARN, message, params);
     };
-    Logger.prototype.trace = function (message, object, deep) {
-        this.doLog(LogLevel_1.LogLevel.TRACE, message, object, deep);
+    Logger.prototype.trace = function (message) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        this.doLog(LogLevel_1.LogLevel.TRACE, message, params);
     };
     Logger.setConfig = function (config) {
         Logger.config = config;
@@ -41,11 +69,17 @@ var Logger = (function () {
             return Logger.loggers[tag] = new Logger(tag);
         }
     };
-    Logger.prototype.doLog = function (level, message, object, deep) {
-        if (typeof object !== "undefined") {
-            message += ' ' + Utils_1.stringify(object, deep || 1);
+    Logger.prototype.doLog = function (level, message) {
+        var params = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            params[_i - 2] = arguments[_i];
         }
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
+            if (params != null && params.length > 0) {
+                message = message.replace(/{(\d+)}/g, function (match, number) {
+                    return typeof params[number] != 'undefined' ? params[number] : match;
+                });
+            }
             for (var i in Logger.config.getAppenders()) {
                 var appender = Logger.config.getAppenders()[i];
                 appender.append({
@@ -57,9 +91,8 @@ var Logger = (function () {
             }
         }
     };
-    Logger.loggers = {};
-    Logger.config = new LoggerConfig_1["default"]();
     return Logger;
 }());
-exports.__esModule = true;
+Logger.loggers = {};
+Logger.config = new LoggerConfig_1["default"]();
 exports["default"] = Logger;

@@ -7,26 +7,26 @@ export default class Logger {
     constructor(private tag?: string) {
 
     }
-    public log(message: string, object?: any, deep?: number) {
-        this.doLog(LogLevel.INFO, message, object, deep);
+    public log(message: string, ...params: any[]) {
+        this.doLog(LogLevel.INFO, message, params);
     }
-    public info(message: string, object?: any, deep?: number) {
-        this.doLog(LogLevel.INFO, message, object, deep);
+    public info(message: string, ...params: any[]) {
+        this.doLog(LogLevel.INFO, message, params);
     }
-    public fatal(message: string, object?: any, deep?: number) {
-        this.doLog(LogLevel.FATAL, message, object, deep);
+    public fatal(message: string, ...params: any[]) {
+        this.doLog(LogLevel.FATAL, message, params);
     }
-    public error(message: string, object?: any, deep?: number) {
-        this.doLog(LogLevel.ERROR, message, object, deep);
+    public error(message: string, ...params: any[]) {
+        this.doLog(LogLevel.ERROR, message, params);
     }
-    public debug(message: string, object?: any, deep?: number) {
-        this.doLog(LogLevel.DEBUG, message, object, deep);
+    public debug(message: string, ...params: any[]) {
+        this.doLog(LogLevel.DEBUG, message, params);
     }
-    public warn(message: string, object?: any, deep?: number) {
-        this.doLog(LogLevel.WARN, message, object, deep);
+    public warn(message: string, ...params: any[]) {
+        this.doLog(LogLevel.WARN, message, params);
     }
-    public trace(message: string, object?: any, deep?: number) {
-        this.doLog(LogLevel.TRACE, message, object, deep);
+    public trace(message: string, ...params: any[]) {
+        this.doLog(LogLevel.TRACE, message, params);
     }
 
     public static setConfig(config: LoggerConfig) {
@@ -46,11 +46,14 @@ export default class Logger {
 
     private static loggers: {[tag: string]: Logger} = {};
 
-    private doLog(level: LogLevel, message: string, object?: any, deep?: number) {
-        if (typeof object !== "undefined") {
-            message += ' ' + stringify(object, deep || 1);
-        }
+    private doLog(level: LogLevel, message: string, ...params: any[]) {
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
+             if (params != null && params.length > 0) {
+                message = message.replace(/{(\d+)}/g, function(match, number) { 
+                    return typeof params[number] != 'undefined' ? params[number] : match;
+                });
+            }
+
             for (var i in Logger.config.getAppenders()) {
                 var appender = Logger.config.getAppenders()[i];
                 appender.append({

@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var LogLevel_1 = require("../LogLevel");
 var BasicLayout = (function () {
     function BasicLayout() {
@@ -22,5 +23,4 @@ var BasicLayout = (function () {
     };
     return BasicLayout;
 }());
-exports.__esModule = true;
 exports["default"] = BasicLayout;

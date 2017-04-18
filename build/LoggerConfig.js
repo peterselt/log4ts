@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var LogLevel_1 = require("./LogLevel");
 var BasicLayout_1 = require("./layouts/BasicLayout");
 var HTMLLayout_1 = require("./layouts/HTMLLayout");
@@ -79,5 +80,4 @@ var LoggerConfig = (function () {
     };
     return LoggerConfig;
 }());
-exports.__esModule = true;
 exports["default"] = LoggerConfig;

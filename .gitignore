@@ -4,3 +4,9 @@
 /typings
 /.tscache
 npm-debug.log
+/demo
+/src/**/*.js
+/src/**/*.js.map
+/test/**/*.js
+/test/**/*.js.map
+.grunt
