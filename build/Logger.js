@@ -11,49 +11,49 @@ var Logger = (function () {
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        this.doLog(LogLevel_1.LogLevel.INFO, message, params);
+        this.doLog.apply(this, [LogLevel_1.LogLevel.INFO, message].concat(params));
     };
     Logger.prototype.info = function (message) {
         var params = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        this.doLog(LogLevel_1.LogLevel.INFO, message, params);
+        this.doLog.apply(this, [LogLevel_1.LogLevel.INFO, message].concat(params));
     };
     Logger.prototype.fatal = function (message) {
         var params = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        this.doLog(LogLevel_1.LogLevel.FATAL, message, params);
+        this.doLog.apply(this, [LogLevel_1.LogLevel.FATAL, message].concat(params));
     };
     Logger.prototype.error = function (message) {
         var params = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        this.doLog(LogLevel_1.LogLevel.ERROR, message, params);
+        this.doLog.apply(this, [LogLevel_1.LogLevel.ERROR, message].concat(params));
     };
     Logger.prototype.debug = function (message) {
         var params = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        this.doLog(LogLevel_1.LogLevel.DEBUG, message, params);
+        this.doLog.apply(this, [LogLevel_1.LogLevel.DEBUG, message].concat(params));
     };
     Logger.prototype.warn = function (message) {
         var params = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        this.doLog(LogLevel_1.LogLevel.WARN, message, params);
+        this.doLog.apply(this, [LogLevel_1.LogLevel.WARN, message].concat(params));
     };
     Logger.prototype.trace = function (message) {
         var params = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        this.doLog(LogLevel_1.LogLevel.TRACE, message, params);
+        this.doLog.apply(this, [LogLevel_1.LogLevel.TRACE, message].concat(params));
     };
     Logger.setConfig = function (config) {
         Logger.config = config;
@@ -76,9 +76,7 @@ var Logger = (function () {
         }
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
             if (params != null && params.length > 0) {
-                message = message.replace(/{(\d+)}/g, function (match, number) {
-                    return typeof params[number] != 'undefined' ? params[number] : match;
-                });
+                message = message.replace(/{(\d+)}/g, function (match, number) { return params[number] ? params[number] : match; });
             }
             for (var i in Logger.config.getAppenders()) {
                 var appender = Logger.config.getAppenders()[i];
@@ -91,8 +89,8 @@ var Logger = (function () {
             }
         }
     };
+    Logger.loggers = {};
+    Logger.config = new LoggerConfig_1["default"]();
     return Logger;
 }());
-Logger.loggers = {};
-Logger.config = new LoggerConfig_1["default"]();
 exports["default"] = Logger;

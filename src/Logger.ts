@@ -8,25 +8,25 @@ export default class Logger {
 
     }
     public log(message: string, ...params: any[]) {
-        this.doLog(LogLevel.INFO, message, params);
+        this.doLog(LogLevel.INFO, message, ...params);
     }
     public info(message: string, ...params: any[]) {
-        this.doLog(LogLevel.INFO, message, params);
+        this.doLog(LogLevel.INFO, message, ...params);
     }
     public fatal(message: string, ...params: any[]) {
-        this.doLog(LogLevel.FATAL, message, params);
+        this.doLog(LogLevel.FATAL, message, ...params);
     }
     public error(message: string, ...params: any[]) {
-        this.doLog(LogLevel.ERROR, message, params);
+        this.doLog(LogLevel.ERROR, message, ...params);
     }
     public debug(message: string, ...params: any[]) {
-        this.doLog(LogLevel.DEBUG, message, params);
+        this.doLog(LogLevel.DEBUG, message, ...params);
     }
     public warn(message: string, ...params: any[]) {
-        this.doLog(LogLevel.WARN, message, params);
+        this.doLog(LogLevel.WARN, message, ...params);
     }
     public trace(message: string, ...params: any[]) {
-        this.doLog(LogLevel.TRACE, message, params);
+        this.doLog(LogLevel.TRACE, message, ...params);
     }
 
     public static setConfig(config: LoggerConfig) {
@@ -48,10 +48,8 @@ export default class Logger {
 
     private doLog(level: LogLevel, message: string, ...params: any[]) {
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
-             if (params != null && params.length > 0) {
-                message = message.replace(/{(\d+)}/g, function(match, number) { 
-                    return typeof params[number] != 'undefined' ? params[number] : match;
-                });
+            if (params != null && params.length > 0) {
+                message = message.replace(/{(\d+)}/g, (match, number) => params[number] ? params[number] : match);
             }
 
             for (var i in Logger.config.getAppenders()) {
