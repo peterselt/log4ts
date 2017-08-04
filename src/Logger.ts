@@ -49,7 +49,7 @@ export default class Logger {
     private doLog(level: LogLevel, message: string, ...params: any[]) {
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
             if (params != null && params.length > 0) {
-                message = message.replace(/{(\d+)}/g, (match, number) => params[number] ? params[number] : match);
+                message = message.replace(/{(\d+)}/g, (match, number) => params[number]);
             }
 
             for (var i in Logger.config.getAppenders()) {

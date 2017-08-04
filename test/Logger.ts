@@ -48,7 +48,7 @@ describe("Logger", ()=>{
             logger.error('error');
             logger.warn('warn');
             logger.info('info');
-            logger.debug('debug');
+            logger.debug('debug {0} {1} {2} {3} {4}', 'w', 'o', 'r', 'k', 's');
             logger.trace('trace');
         }
 
@@ -84,17 +84,17 @@ describe("Logger", ()=>{
         it('works for DEBUG', ()=>{
             Logger.setConfig(new LoggerConfig(appender, LogLevel.DEBUG));
             logAllLevels();
-            expect(getLogMessages()).toEqual(['fatal', 'error', 'warn', 'info', 'debug']);
+            expect(getLogMessages()).toEqual(['fatal', 'error', 'warn', 'info', 'debug w o r k s']);
         });
         it('works for TRACE', ()=>{
             Logger.setConfig(new LoggerConfig(appender, LogLevel.TRACE));
             logAllLevels();
-            expect(getLogMessages()).toEqual(['fatal', 'error', 'warn', 'info', 'debug', 'trace']);
+            expect(getLogMessages()).toEqual(['fatal', 'error', 'warn', 'info', 'debug w o r k s', 'trace']);
         });
         it('works for ALL', ()=>{
             Logger.setConfig(new LoggerConfig(appender, LogLevel.ALL));
             logAllLevels();
-            expect(getLogMessages()).toEqual(['fatal', 'error', 'warn', 'info', 'debug', 'trace']);
+            expect(getLogMessages()).toEqual(['fatal', 'error', 'warn', 'info', 'debug w o r k s', 'trace']);
         });
     });
 });

@@ -76,7 +76,7 @@ var Logger = (function () {
         }
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
             if (params != null && params.length > 0) {
-                message = message.replace(/{(\d+)}/g, function (match, number) { return params[number] ? params[number] : match; });
+                message = message.replace(/{(\d+)}/g, function (match, number) { return params[number]; });
             }
             for (var i in Logger.config.getAppenders()) {
                 var appender = Logger.config.getAppenders()[i];
