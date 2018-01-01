@@ -49,7 +49,32 @@ export default class Logger {
     private doLog(level: LogLevel, message: string, ...params: any[]) {
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
             if (params != null && params.length > 0) {
-                message = message.replace(/{(\d+)}/g, (match, number) => params[number]);
+                const usedParams = [];
+
+                message = message.replace(/{(\d+)}/g, (match, number) => {
+                    const value = params[number];
+                    usedParams.push(value);
+
+                    if (typeof value === 'object') {
+                        return JSON.stringify(value);
+                    } else {
+                        return value;
+                    }
+                });
+
+                if (usedParams.length < params.length) {
+                    const diff = params.filter(i => usedParams.indexOf(i) < 0);
+
+                    diff.forEach(param => {
+                        const value = param;
+
+                        if (typeof value === 'object') {
+                            message += ' ' + JSON.stringify(value);
+                        } else {
+                            message += ' ' + value;
+                        }
+                    });
+                }
             }
 
             for (var i in Logger.config.getAppenders()) {
