@@ -76,7 +76,29 @@ var Logger = (function () {
         }
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
             if (params != null && params.length > 0) {
-                message = message.replace(/{(\d+)}/g, function (match, number) { return params[number]; });
+                var usedParams_1 = [];
+                message = message.replace(/{(\d+)}/g, function (match, number) {
+                    var value = params[number];
+                    usedParams_1.push(value);
+                    if (typeof value === 'object') {
+                        return JSON.stringify(value);
+                    }
+                    else {
+                        return value;
+                    }
+                });
+                if (usedParams_1.length < params.length) {
+                    var diff = params.filter(function (i) { return usedParams_1.indexOf(i) < 0; });
+                    diff.forEach(function (param) {
+                        var value = param;
+                        if (typeof value === 'object') {
+                            message += ' ' + JSON.stringify(value);
+                        }
+                        else {
+                            message += ' ' + value;
+                        }
+                    });
+                }
             }
             for (var i in Logger.config.getAppenders()) {
                 var appender = Logger.config.getAppenders()[i];
