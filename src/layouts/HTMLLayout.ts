@@ -91,7 +91,8 @@ export default class HTMLLayout implements ILayout {
             '-' + pad(date.getDate()) +
             ' ' + pad(date.getHours()) +
             ':' + pad(date.getMinutes()) +
-            ':' + pad(date.getSeconds());
+            ':' + pad(date.getSeconds()) +
+            '.' + pad(date.getMilliseconds());
     }
 
     private colors: HTMLLayoutColors;

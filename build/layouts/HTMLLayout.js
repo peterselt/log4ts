@@ -82,7 +82,8 @@ var HTMLLayout = (function () {
             '-' + pad(date.getDate()) +
             ' ' + pad(date.getHours()) +
             ':' + pad(date.getMinutes()) +
-            ':' + pad(date.getSeconds());
+            ':' + pad(date.getSeconds()) +
+            '.' + pad(date.getMilliseconds());
     };
     return HTMLLayout;
 }());
